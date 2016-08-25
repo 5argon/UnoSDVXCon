@@ -1,6 +1,7 @@
 #Sound Voltex/K-Shoot Mania Controller Script for an Arduino Uno
 
-![noahnear](https://github.com/5argon/UnoSDVXCon/raw/master/images/splash.gif)
+![noah](https://github.com/5argon/UnoSDVXCon/raw/master/images/head.jpg)
+![near](https://github.com/5argon/UnoSDVXCon/raw/master/images/splash.gif)
 
 This is for building your own physical controller for the game called [K-Shoot Mania](http://kshoot.client.jp) with an Arduino Uno as a USB interface.
 

@@ -1,14 +1,15 @@
-//Sketch -> Include Library > Manage Library... > Search for "Encoder" then install it.
-#include <Encoder.h>
-
 // Arduino Uno Sound Voltex Controller Script
 // By 5argon
 // https://github.com/5argon/SDVXArduinoUno
 // Contact - @5argondesu
 
+//Sketch -> Include Library > Manage Library... > Search for "Encoder" then install it.
+#include <Encoder.h>
 
-//Uncomment to send serial button message to Arduino debug console.
-//Serial message also activates pin 1 (TX), so if your config used pin 1 this may causes problems.
+//Uncomment to send serial button/knob message to Arduino debug console to test if your connection work or not without the game.
+//When debugging, serial message also activates pin 1 (TX), so if your config used pin 1 this may causes problems.
+//When actually using, you MUST comment out; As debug message is the same channel as keyboard message.
+//(If you forgot, a push of some button might quit your works without saving and shutdown your computer at the same time.) 
 //#define SERIAL_DEBUGGING
 
 // -- Setup your button connections to the Arduino Uno pins here. --
@@ -22,7 +23,7 @@ int const FXL = 5;
 int const FXR = 7;
 int const START = 555; //My controller don't have a start button
 
-//Button's LED. From Arduino pin to LED + resistor to GND.
+//Button's LED. From the pin below to LED + resistor to GND.
 int const BTLA = A5;
 int const BTLB = A4;
 int const BTLC = A2;
@@ -36,7 +37,7 @@ int const STARTL = 556; //My controller don't have a start button
 
 //You MUST connect one of each encoder's white or green cable to pin 2 and 3. These 2 pins on an Uno are special external interrupt pins. (It's fast)
 //For example, VOLLA = 2 and VOLLRA = 3. (both encoder's white). The green cable can choose any pin.
-//In short, this will make both encoder good. Without this you cannot pass a chart like Firestorm EXH.
+//In short, this will make both encoder good. Without this you will die on Firestorm EXH.
 
 int const VOLLA = 2;
 int const VOLLB = 4;
