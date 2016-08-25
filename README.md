@@ -1,4 +1,4 @@
-#Sound Voltex Controller Script for Arduino Uno
+#Sound Voltex/K-Shoot Mania Controller Script for an Arduino Uno
 
 ![noahnear](https://github.com/5argon/UnoSDVXCon/raw/master/images/splash.gif)
 
