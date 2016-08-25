@@ -15,7 +15,7 @@ Previous alternatives are connecting buttons to disassembled [Joystick circuit](
 ##Requires
 - A [firmware flash hack](http://mitchtech.net/arduino-usb-hid-keyboard/) that will make your Arduino HID compatible but loses ability to program. (Need to flash the firmware back to reprogram) (Cannot brick your Uno.)
 
-Please wait for more information after I tested the code more. But if you want to go ahead here are rough steps :
+Please wait for more information after I test the code more. But if you want to go ahead here are rough steps :
 - Make a controller.
 - Look at the code's top part and config things according to your connections to Uno's pin. Please read the comments. (Important)
 - Upload the code to your Uno with the [Arduino IDE](https://www.arduino.cc/en/Main/Software).
