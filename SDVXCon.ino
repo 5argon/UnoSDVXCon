@@ -21,7 +21,7 @@ int const BTC = 6;
 int const BTD = 11;
 int const FXL = 5;
 int const FXR = 7;
-int const START = 555; //My controller don't have a start button
+int const START = 13;
 
 //Button's LED. From the pin below to LED + resistor to GND.
 int const BTLA = A5;
@@ -30,13 +30,13 @@ int const BTLC = A2;
 int const BTLD = A0;
 int const FXLL = 8;
 int const FXLR = 10;
-int const STARTL = 556; //My controller don't have a start button
+int const STARTL = A3;
 
 //Encoders. If you are using a Copal, the white cable is A and the green cable is B. (Red goes to 5V and black goes to GND)
 //VOLL is the left encoder, VOLR is the right encoder. Please DO NOT use pin 13 on Uno. (LED connected pin)
 
 //You MUST connect one of each encoder's white or green cable to pin 2 and 3. These 2 pins on an Uno are special external interrupt pins. (It's fast)
-//For example, VOLLA = 2 and VOLLRA = 3. (both encoder's white). The green cable can choose any pin.
+//For example, VOLLA = 2 and VOLRA = 3. (both encoder's white). The green cable can choose any pin.
 //In short, this will make both encoder good. Without this you will die on Firestorm EXH.
 
 int const VOLLA = 2;
@@ -61,7 +61,7 @@ uint8_t keyFXR = 16; //m
 //uint8_t keyFXR = 0x8B; //変換
 
 
-uint8_t keySTART = 43; //Enter
+uint8_t keySTART = 40; //Enter
 
 uint8_t keyVOLLCCW = 20; //q
 uint8_t keyVOLLCW = 26; //w
@@ -95,8 +95,6 @@ bool BTAHwState, BTBHwState, BTCHwState, BTDHwState, FXLHwState, FXRHwState, Sta
 KnobState VOLLState, VOLRState = Stop;
 unsigned long BTADebounce, BTBDebounce, BTCDebounce, BTDDebounce, FXLDebounce, FXRDebounce, StartDebounce = 0;
 
-
-
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -107,6 +105,7 @@ void setup() {
   setupButton(BTD);
   setupButton(FXL);
   setupButton(FXR);
+  setupButton(START);
 
   setupLED(BTLA);
   setupLED(BTLB);
@@ -114,10 +113,7 @@ void setup() {
   setupLED(BTLD);
   setupLED(FXLL);
   setupLED(FXLR);
-
-  pinMode(12,OUTPUT);
-  digitalWrite(12,HIGH);
-
+  setupLED(STARTL);
 }
 
 void setupButton(int button)
@@ -291,9 +287,9 @@ void serialFromState()
   //We prioritize buttons first as the knobs can be repeatedly pressed and released.
 
   //Check buttons
-  int buttons[6] = {BTA,BTB,BTC,BTD,FXL,FXR};
+  int buttons[7] = {BTA,BTB,BTC,BTD,FXL,FXR,START};
   int slotIndex = 2;
-  for( int i = 0; i < 6; i++)
+  for( int i = 0; i < 7; i++)
   {
     if(getButtonState(buttons[i]) == HIGH)
     {
@@ -534,7 +530,7 @@ String getName(int inputPort)
     }
     case START:
     {
-      return "Start";
+      return "START";
       break;
     }
     case VOLLA:
@@ -638,7 +634,7 @@ void setButtonHwState(int button, bool state)
     }
     case START:
     {
-      StartState = state;
+      StartHwState = state;
       break;
     }
   }
@@ -776,6 +772,7 @@ void loop() {
   checkButton(BTD);
   checkButton(FXL);
   checkButton(FXR);
+  checkButton(START);
 
   checkKnob(VOLLA, VOLLB);
   checkKnob(VOLRA, VOLRB);
