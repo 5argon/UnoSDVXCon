@@ -21,7 +21,7 @@ int const BTC = 6;
 int const BTD = 11;
 int const FXL = 5;
 int const FXR = 7;
-int const START = 13;
+int const START = 10;
 
 //Button's LED. From the pin below to LED + resistor to GND.
 int const BTLA = A5;
@@ -29,7 +29,7 @@ int const BTLB = A4;
 int const BTLC = A2;
 int const BTLD = A0;
 int const FXLL = 8;
-int const FXLR = 10;
+int const FXLR = 13;
 int const STARTL = A3;
 
 //Encoders. If you are using a Copal, the white cable is A and the green cable is B. (Red goes to 5V and black goes to GND)
@@ -61,7 +61,7 @@ uint8_t keyFXR = 16; //m
 //uint8_t keyFXR = 0x8B; //変換
 
 
-uint8_t keySTART = 40; //Enter
+uint8_t keySTART = 40 ; //Enter
 
 uint8_t keyVOLLCCW = 20; //q
 uint8_t keyVOLLCW = 26; //w
