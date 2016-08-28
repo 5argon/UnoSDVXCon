@@ -26,7 +26,6 @@ The controller with Arduino Uno in this video uses this script. The knob miss pr
 
 ##How to use
 
-Please wait for more information after I test the code more. But if you want to go ahead here are rough steps :
 - Make a controller around an Arduino Uno.
 - Look at the SDVXCon.ino's top part and config things according to your connections to Uno's pin. Please read the comments before deciding which pin for each component, as the knobs requires specific pin. (Important)
 - Upload the code to your Uno with the [Arduino IDE](https://www.arduino.cc/en/Main/Software).
