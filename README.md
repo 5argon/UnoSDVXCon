@@ -31,3 +31,7 @@ The controller with Arduino Uno in this video uses this script. The knob miss pr
 - Upload the code to your Uno with the [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 - Do the [firmware flash hack](http://mitchtech.net/arduino-usb-hid-keyboard/). In that link, you will need a jumper, a cable or something to short circuit 2 pins on the Uno to begin flashing.
 - Reconnect and done!
+
+##Contact
+
+You can post issue here or DM me on Twitter. ([@5argondesu](https://twitter.com/5argondesu))
