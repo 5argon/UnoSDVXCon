@@ -12,6 +12,7 @@ Previous alternatives are connecting buttons to disassembled [Joystick circuit](
 The controller with Arduino Uno in this video uses this script. The knob miss probably results from my skill, not the script. (My rank is 9 in SDVX, I could not play perfectly.)
 
 [cry of viyella - Laur](https://www.youtube.com/watch?v=efWP1qvjdQ0)
+
 [Fall in the Vortex - LAriA](https://www.youtube.com/watch?v=rYstLXN4oDg)
 
 ##Features
