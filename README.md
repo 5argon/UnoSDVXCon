@@ -22,7 +22,7 @@ The controller with Arduino Uno in this video uses this script. The knob miss pr
 - Adjust sensitivity of knobs and buttons in the code.
 
 ##Requires
-- A [firmware flash hack](http://mitchtech.net/arduino-usb-hid-keyboard/) that will make your Arduino HID compatible but loses ability to program. If you want to reupload the program again you need to Need to flash the firmware back. (Cannot brick your Uno.)
+- A [firmware flash hack](http://mitchtech.net/arduino-usb-hid-keyboard/) that will make your Arduino HID compatible but loses ability to program. If you want to reupload the program again you need to flash the firmware back. (Flashing this firmware cannot brick your Uno.)
 
 ##How to use
 
