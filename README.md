@@ -34,4 +34,4 @@ The controller with Arduino Uno in this video uses this script. The knob miss pr
 
 ##Contact
 
-You can post issue here or DM me on Twitter. ([@5argondesu](https://twitter.com/5argondesu))
+You can post an issue here or DM me on Twitter. ([@5argondesu](https://twitter.com/5argondesu))
