@@ -4,6 +4,8 @@
 ![near](https://github.com/5argon/UnoSDVXCon/raw/master/images/splash.gif)
 ![laur](https://github.com/5argon/UnoSDVXCon/raw/master/images/laurtrim.gif)
 
+** NOTE ** The knob function as a rapid key press as you can see from the gif, so this means it is not suitable for the official e-amusement cloud game as the game is expecting a button hold for knobs unlike K-Shoot. See [this issue](https://github.com/5argon/UnoSDVXCon/issues/2) for details.
+
 If you build your own controller for the game called [K-Shoot Mania](http://kshoot.client.jp) you will need some way to connect it to your computer. In the case that you want to use an Arduino Uno as a USB interface, this script (.ino file) will provides a working logic from the controller's input to emulate your computer's keyboard + button light feedback.
 
 Previous alternatives are connecting buttons to disassembled [Joystick circuit](http://homingpuyo.blog91.fc2.com/blog-entry-650.html), or using an [Arduino Leonardo](http://sdvxii.pancakeapps.com/LEONARDO). Arduino Uno cannot interface as a keyboard as easily as Leonardo. Only [Leonardo, Micro, and Due](https://www.arduino.cc/en/Reference/MouseKeyboard) can use the built-in keyboard functions.
