@@ -76,11 +76,28 @@ unsigned const long debounceDelay = 5;
 //Value too low can also make the knob go either direction randomly when you just touch the knob.
 unsigned const long spinTolerance = 4; 
 
+// DGKP 30/10/17
+// Added two values to try and force button held down state during knob rotation, as opposed to repeated button presses. Chances are that both of these values will, possibly in conjunction with spinTolerance, be amended
+// entirely dependant on what kind of knobs you are using.
+// Amending these values will inevitably cause some kind of response lag, unfortunately, as they're based on waiting a number of processing loops before changing the button up/down state. Having both these values set to
+// zero (0) should theoretically result in the same behavoir as the original version of the script.
+
+// spinDelay is the number of processing cycles it'll wait for you to meet spinTolerance before changing the state of the knob, assuming that there is *some* change in the knobs position. Probably want to muck around with
+// this one in the first instance.
+// stopDelay is the number of processing cycles it'll wait after detecting no change in the knob position before deciding that you have stopped moving it. Probably don't really want to be amending this, but if your knob is
+// a little too on the low resolution side of things, then maybe increase this by 1 or 2 and see if it improves things. If you need to increase this particularly high to get things to register consistently as a hold, you
+// may need to invest in some better rotary encoders.
+unsigned const long spinDelay = 0;
+unsigned const long stopDelay = 0;
 // ----
 
 Encoder encL(VOLLA,VOLLB);
 Encoder encR(VOLRA,VOLRB);
 long encLPosition, encRPosition = 0;
+
+// DGKP 30/10/17
+// Extra values being used to track the number of processing cycles a button is in various states.
+long spinLCount, spinRCount, stopLCount, stopRCount = 0;
 
 uint8_t buf[8] = { 0 }; 
 
@@ -172,46 +189,166 @@ void lightOn(int inputPin)
 
 void checkKnob(int knobA, int knobB)
 {
+//DGKP 30/10/17
+// Assorted changes to fix hold issues.
   int readPosition;
+// Left KnobState
   if(knobA == VOLLA || knobB == VOLLB)
   {
     readPosition = encL.read();
-    
-    if(readPosition > (long)(encLPosition + spinTolerance))
-    {
-      knobLActionCCW();
-      encLPosition = readPosition;
-    }
-    else if(readPosition < (long)(encLPosition - spinTolerance) )
-    {
-      knobLActionCW();
-      encLPosition = readPosition;
-    }
-    else
-    {
-      knobLActionStop();
-    }
-    
+// Check if knob has moved in CCW direction since last time
+	if(readPosition > (long)(encLPosition))
+	{
+// Check if knob has moved in CCW direction more than the Tolerance level since last check.
+		if (readPosition > (long)(encLPosition + spinTolerance))
+		{
+// If so, set knob in CCW state, update position variable, and set state counters to 0
+			knobLActionCCW();
+			encLPosition = readPosition;
+			spinLCount = 0;
+			stopLCount = 0;
+		} 
+		else
+		{
+// If not changed over tolerance, then check to see if the current button state is CCW
+			if(VOLLState == CCW)
+			{
+// If it was CCW, then check if we have passed the number of processing loops required for us to decide you are no longer actually moving the knob.
+				if (spinLCount >= spinDelay)
+				{
+// If so, set state counters to 0 and knob to stopped
+					spinLCount = 0;
+					stopLCount = 0;
+					knobLActionStop();
+				}
+				else
+				{
+// Otherwise, increment the spin counter.
+					spinLCount++;
+				}
+			}
+		}
+	}
+	else if(readPosition < (long)(encLPosition))
+	{
+// Same as above, but in the clockwise direction
+		if (readPosition < (long)(encLPosition - spinTolerance))
+		{
+			knobLActionCW();
+			encLPosition = readPosition;
+			spinLCount = 0;
+			stopLCount = 0;
+		} 
+		else
+		{
+			if(VOLLState == CW)
+			{
+				if (spinLCount >= spinDelay)
+				{
+					spinLCount = 0;
+					stopLCount = 0;
+					knobLActionStop();
+				}
+				else
+				{
+					spinLCount++;
+				}
+			}
+		}		
+	}
+	else
+	{
+// If the knob has not moved, check if we have been waiting stopDelay number of processing cycles yet
+		if (stopLCount >= stopDelay)
+		{
+// If so, update status counters and set knob to stopped state
+			spinLCount = 0;
+			stopLCount = 0;
+			knobLActionStop();
+		}
+		else
+		{
+// Otherwise, assuming we don't think the knob has stopped already, increment the stop counter.
+			if (VOLLState != Stop)
+			{
+				stopLCount++;
+			}
+		}
+	}
   }
   else
   {
+// Same as above, but for the right rather than left knob
     readPosition = encR.read();
     
-    if(readPosition > (long)(encRPosition + spinTolerance))
-    {
-      knobRActionCCW();
-      encRPosition = readPosition;
-    }
-    else if(readPosition < (long)(encRPosition - spinTolerance) )
-    {
-      knobRActionCW();
-      encRPosition = readPosition;
-    }
-    else
-    {
-      knobRActionStop();
-    }
-
+	if(readPosition > (long)(encRPosition))
+	{
+		if (readPosition > (long)(encRPosition + spinTolerance))
+		{
+			knobRActionCCW();
+			encRPosition = readPosition;
+			spinRCount = 0;
+			stopRCount = 0;
+		} 
+		else
+		{
+			if(VOLRState == CCW)
+			{
+				if (spinRCount >= spinDelay)
+				{
+					spinRCount = 0;
+					stopRCount = 0;
+					knobRActionStop();
+				} 
+				else
+				{
+					spinRCount++;
+				}
+			}
+		}
+	}
+	else if(readPosition < (long)(encRPosition))
+	{
+		if (readPosition < (long)(encRPosition - spinTolerance))
+		{
+			knobRActionCW();
+			encRPosition = readPosition;
+			spinRCount = 0;
+			stopRCount = 0;
+		} 
+		else
+		{
+			if(VOLRState == CW)
+			{
+				if (spinRCount >= spinDelay)
+				{
+					spinRCount = 0;
+					stopRCount = 0;
+					knobRActionStop();
+				} 
+				else
+				{
+					spinRCount++;
+				}
+			}
+		}		
+	}
+	else
+	{
+		if (stopRCount >= stopDelay)
+		{
+			spinRCount = 0;
+			stopRCount = 0;
+			knobRActionStop();
+		}
+		else
+		{
+			if (VOLRState != Stop)
+			{
+				stopRCount++;
+			}
+		}
+	}
   }
 }
 
